@@ -4,10 +4,20 @@ This TensorFlow implementation of NVDIAs ProGAN architecture is used in this [pa
 
 The work was originally done with TensorFlow version 1.6.0, making it quite outdated since TF is in version >2.1.0. Replacing the `import tensorflow as tf` line in all files to `import tensorflow.compat.v1 as tf` in addition to adding `tf.disable_v2_behavior()` seems to partially fix some compatibility issues, however this just leads to numerous other issues, I think many stemming from the merging of Keras as a sub-class of TensorFlow after tf version 2.0.
 
+The dataset I'm attempting to train with comes from [here](https://dataserv.ub.tum.de/s/m1474000), the `ROIs1158_spring_s2.tar.gz` folder is what I've been using initially. The dataset is created by running `python dataset_tool.py /datasets/sensat/ /../image_directory/`. This takes the images in the given directory and produces approrpiate `.tfrecord` files which the network can work with. The `dataset` folder should be placed in the same directory as the other python source files.
 
+Currently the network is producing the following error when attempting to run `python train.py`
 
+`
+  File "C:\Users\Paddy\miniconda3\lib\site-packages\keras\optimizers\optimizer_v2\optimizer_v2.py", line 965, in __getattribute__
+    return super().__getattribute__(name)
+AttributeError: 'Adam' object has no attribute 'compute_gradients'
+`
+This appears to be an issue between porting things over from TensorFlow Version 1.x.x to TensorFlow 2.0
 
-## Progressive Growing of GANs for Improved Quality, Stability, and Variation<br><i>– Official TensorFlow implementation of the ICLR 2018 paper</i>
+My knowledge of TensorFlow is not broad enough to know how to go about fixing this.
+
+## (Original Readme) Progressive Growing of GANs for Improved Quality, Stability, and Variation<br><i>– Official TensorFlow implementation of the ICLR 2018 paper</i>
 
 **Tero Karras** (NVIDIA), **Timo Aila** (NVIDIA), **Samuli Laine** (NVIDIA), **Jaakko Lehtinen** (NVIDIA and Aalto University)
 
